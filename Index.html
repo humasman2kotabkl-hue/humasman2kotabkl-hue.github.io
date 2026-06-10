@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Kelulusan PMB - MAN 2 Kota Bengkulu</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Poppins & Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- html2pdf.js for Client-Side A4 PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <style>
+    /* Custom brand utility classes to replace dynamic tailwind.config dependency */
+    .bg-brand-green { background-color: #0F5132 !important; }
+    .text-brand-green { color: #0F5132 !important; }
+    .border-brand-green { border-color: #0F5132 !important; }
+    .text-brand-gold { color: #D4AF37 !important; }
+    .border-brand-gold { border-color: #D4AF37 !important; }
+    .bg-brand-graylight { background-color: #F5F5F5 !important; }
+    .text-brand-dark { color: #212529 !important; }
+
+    body {
+      font-family: 'Poppins', 'Roboto', sans-serif !important;
+    }
+
+    /* Mobile-first constraints for Desktop */
+    @media (min-width: 640px) {
+      .mobile-frame {
+        max-width: 480px;
+        min-height: 853px;
+        margin: 2rem auto;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        border: 8px solid #2d3748;
+        background-color: #F5F5F5;
+        position: relative;
+        overflow-y: auto;
+      }
+      body {
+        background: linear-gradient(135deg, #0F5132 0%, #1c3d2e 100%);
+        background-attachment: fixed;
+      }
+    }
+
+    /* Print styles optimized specifically for A4 portrait paper */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-area, #print-area * {
+        visibility: visible;
+      }
+      #print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 210mm;  /* A4 Width */
+        height: 297mm; /* A4 Height */
+        padding: 20mm !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: 2px solid #0F5132 !important;
+        background-color: white !important;
+        color: black !important;
+        box-sizing: border-box;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    /* Smooth transition animations */
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Glassmorphism utility */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    /* Double border utility for official Letterhead */
+    .border-double-custom {
+      border-bottom: 4px double #0F5132;
+    }
+  </style>
+</head>
+<body class="bg-brand-graylight text-brand-dark min-h-screen flex items-center justify-center">
+
+  <div class="mobile-frame w-full bg-brand-graylight flex flex-col justify-between shadow-md min-h-screen sm:min-h-0 sm:h-[880px]">
+    
+    <div>
+      <!-- Header (Sticky) -->
+      <header class="sticky top-0 z-40 bg-brand-green text-white p-4 shadow-md no-print border-b-4 border-brand-gold">
+        <div class="flex items-center justify-between gap-2">
+          <!-- Left Part: Logo & Madrasah Info -->
+          <div class="flex items-center gap-2">
+            <!-- Official MAN 2 Logo Image direct link -->
+            <img 
+              class="w-10 h-10 flex-shrink-0 object-contain rounded-full bg-white p-0.5" 
+              src="https://lh3.googleusercontent.com/d/1OXw4aI1fVQC3N4sfwLOcCO8s9E3qSBfm" 
+              alt="Logo MAN 2"
+              onerror="this.onerror=null; this.src='https://placehold.co/40x40/0F5132/D4AF37?text=MAN+2';"
+            >
+            <div>
+              <h1 class="font-bold text-xs leading-tight tracking-wider">MAN 2 KOTA BENGKULU</h1>
+              <p class="text-[9px] italic text-gray-200 leading-normal max-w-[180px]">
+                Jl. Depati Payung Negara Kel. Pekan Sabtu Kec. Selebar Kota Bengkulu
+              </p>
+            </div>
+          </div>
+          
+          <!-- Right Part: Title Header -->
+          <div class="text-right flex-shrink-0">
+            <h2 class="font-bold text-[10px] text-brand-gold tracking-widest leading-none">PENGUMUMAN</h2>
+            <p class="text-[8px] font-semibold text-white leading-tight">KELULUSAN PMB</p>
+            <p class="text-[7px] text-gray-300 leading-none">T.P 2026/2027</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="p-4 space-y-4 no-print">
+        
+        <!-- Hero Section & Welcome Card -->
+        <section class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-brand-green glass-card">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-brand-green">
+              <i class="fa-solid fa-bullhorn text-lg"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm text-brand-green">PENGUMUMAN TELAH DIBUKA</h3>
+              <p class="text-xs text-gray-500">Silakan cek data Anda untuk melihat hasil seleksi.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Form Login / Pencarian -->
+        <section class="bg-white rounded-xl p-5 shadow-sm space-y-4 border border-gray-100">
+          <div class="border-b pb-2">
+            <h4 class="font-semibold text-xs text-gray-700 uppercase tracking-wider">
+              <i class="fa-solid fa-user-shield mr-1 text-brand-green"></i> Validasi Peserta
+            </h4>
+          </div>
+          
+          <form id="search-form" class="space-y-3" onsubmit="handleSearch(event)">
+            <div>
+              <label for="nomor_peserta" class="block text-xs font-semibold text-gray-600 mb-1">Nomor Peserta</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <i class="fa-solid fa-id-card text-xs"></i>
+                </span>
+                <input 
+                  type="text" 
+                  id="nomor_peserta" 
+                  name="nomor_peserta" 
+                  placeholder="Masukkan Nomor Peserta" 
+                  class="w-full pl-9 pr-3 py-2 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all"
+                  required
+                >
+              </div>
+            </div>
+
+            <div>
+              <label for="nisn" class="block text-xs font-semibold text-gray-600 mb-1">NISN</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <i class="fa-solid fa-key text-xs"></i>
+                </span>
+                <input 
+                  type="password" 
+                  id="nisn" 
+                  name="nisn" 
+                  placeholder="Masukkan NISN Anda" 
+                  class="w-full pl-9 pr-3 py-2 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all"
+                  required
+                >
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              id="submit-btn"
+              class="w-full bg-brand-green hover:bg-emerald-900 text-white font-bold py-2.5 px-4 rounded-lg text-xs tracking-wider transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 shadow"
+            >
+              <span id="btn-text">CEK HASIL</span>
+              <i id="btn-icon" class="fa-solid fa-paper-plane"></i>
+              <!-- Loading Spinner -->
+              <svg id="btn-spinner" class="animate-spin h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </button>
+          </form>
+        </section>
+
+        <!-- Feedback Error Message -->
+        <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-800 text-xs p-4 rounded-xl flex items-start gap-2.5 fade-in">
+          <i class="fa-solid fa-triangle-exclamation text-red-600 text-sm mt-0.5"></i>
+          <div>
+            <p class="font-bold">Data Tidak Ditemukan</p>
+            <p class="text-gray-600 mt-0.5">Kombinasi Nomor Peserta dan NISN tidak cocok atau belum terdaftar di sistem kami. Periksa kembali inputan Anda.</p>
+          </div>
+        </div>
+
+      </main>
+
+      <section id="result-section" class="hidden p-4 fade-in">
+        
+        <!-- Standard A4 Preview Container -->
+        <div id="print-area" class="bg-white rounded-xl p-6 shadow-md border-2 border-brand-green relative overflow-hidden bg-contain bg-center bg-no-repeat max-w-full">
+          
+          <!-- Watermark Logo Kemenag / MAN 2 -->
+          <div class="absolute inset-0 opacity-5 pointer-events-none flex items-center justify-center">
+            <svg class="w-72 h-72 fill-current text-brand-green" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.4z"/>
+            </svg>
+          </div>
+
+          <!-- Official Kop Surat (Kementerian Agama RI) with New Logo -->
+          <div class="flex items-center gap-3 border-double-custom pb-3 mb-4">
+            <img 
+              class="w-12 h-12 flex-shrink-0 object-contain rounded-full bg-white p-0.5" 
+              src="https://lh3.googleusercontent.com/d/1OXw4aI1fVQC3N4sfwLOcCO8s9E3qSBfm" 
+              alt="Logo MAN 2"
+              onerror="this.onerror=null; this.src='https://placehold.co/48x48/0F5132/FFFFFF?text=MAN2';"
+            >
+            <div class="text-center flex-1">
+              <h3 class="font-bold text-[10px] leading-tight tracking-wider text-gray-800">KEMENTERIAN AGAMA REPUBLIK INDONESIA</h3>
+              <h2 class="font-bold text-[12px] leading-tight tracking-wider text-brand-green">MADRASAH ALIYAH NEGERI 2 KOTA BENGKULU</h2>
+              <p class="text-[7px] text-gray-500 italic mt-0.5">
+                Jl. Depati Payung Negara Kel. Pekan Sabtu Kec. Selebar, Kota Bengkulu | Telp: (0736) 51241
+              </p>
+            </div>
+          </div>
+
+          <!-- Certificate Core Title -->
+          <div class="text-center mb-4">
+            <h4 class="font-bold text-xs uppercase tracking-widest text-brand-green underline decoration-1">SURAT KETERANGAN KELULUSAN SELEKSI</h4>
+            <p class="text-[8px] text-gray-500 font-mono mt-0.5">Nomor: 324/Ma.07.02/PP.00.6/06/2026</p>
+          </div>
+
+          <p class="text-[10px] text-gray-700 leading-relaxed mb-3 text-justify">
+            Kepala Madrasah Aliyah Negeri 2 Kota Bengkulu, berdasarkan keputusan hasil rapat Pleno Panitia PMB Tahun Pelajaran 2026/2027 menerangkan bahwa peserta berikut:
+          </p>
+
+          <!-- Table Student Metadata -->
+          <div class="bg-gray-50 p-3 rounded-lg border border-gray-100 space-y-2 mb-4 text-xs">
+            <div class="flex justify-between border-b border-gray-200/60 pb-1">
+              <span class="text-gray-500">Nomor Peserta</span>
+              <span id="res-no-peserta" class="font-semibold text-brand-dark"></span>
+            </div>
+            <div class="flex justify-between border-b border-gray-200/60 pb-1">
+              <span class="text-gray-500">NISN</span>
+              <span id="res-nisn" class="font-semibold text-brand-dark"></span>
+            </div>
+            <div class="flex justify-between border-b border-gray-200/60 pb-1">
+              <span class="text-gray-500">Nama Lengkap</span>
+              <span id="res-nama" class="font-bold text-brand-green uppercase"></span>
+            </div>
+            <div class="flex justify-between border-b border-gray-200/60 pb-1">
+              <span class="text-gray-500">Tanggal Lahir</span>
+              <span id="res-tgl-lahir" class="font-semibold text-brand-dark"></span>
+            </div>
+            <div class="flex justify-between pb-0.5">
+              <span class="text-gray-500">Asal Sekolah</span>
+              <span id="res-sekolah" class="font-semibold text-brand-dark"></span>
+            </div>
+          </div>
+
+          <!-- Status Banner (Differentiated based on Selection Status) -->
+          <div id="status-banner" class="mb-5 p-3 rounded-lg flex items-start gap-2.5">
+            <span id="status-icon-wrapper" class="w-7 h-7 rounded-full flex items-center justify-center text-sm shrink-0">
+              <!-- Dynamically populated icon -->
+            </span>
+            <div>
+              <p id="status-title" class="font-bold text-[11px] text-gray-800 leading-tight"></p>
+              <p id="status-desc" class="text-[9px] text-gray-600 mt-0.5 leading-normal"></p>
+            </div>
+          </div>
+
+          <!-- Official Stamp & Signatures Block -->
+          <div class="mt-6 flex justify-between items-end">
+            <!-- QR Code Security Indicator -->
+            <div class="text-left w-24 flex flex-col items-center">
+              <!-- New Official QR Code Image direct link -->
+              <img 
+                class="w-14 h-14 p-1 border border-gray-200 rounded object-contain bg-white" 
+                src="https://lh3.googleusercontent.com/d/1_bCroUKwC-8_0QIpEOGIJrphkvXBQMjo" 
+                alt="QR Code Verifikasi"
+                onerror="this.onerror=null; this.src='https://placehold.co/56x56/FFFFFF/0F5132?text=QR';"
+              >
+              <span class="text-[6px] text-gray-400 mt-1 font-mono text-center leading-none">Verifikasi Keaslian Dokumen</span>
+            </div>
+
+            <!-- Principal Signature -->
+            <div class="text-center w-36 text-[9px] text-gray-600">
+              <p class="mb-0.5">Bengkulu, 10 Juni 2026</p>
+              <p class="font-semibold text-brand-dark leading-tight">Kepala Madrasah,</p>
+              <div class="h-10 flex items-center justify-center relative my-0.5">
+                <div class="border border-dashed border-emerald-300 bg-emerald-50 rounded px-1.5 py-0.5 text-[7px] text-emerald-800 flex items-center gap-1">
+                  <i class="fa-solid fa-signature"></i>
+                  <span>TTD DIGITAL</span>
+                </div>
+              </div>
+              <p class="font-bold text-brand-dark underline leading-none">Dr.Rahayu, M.Pd</p>
+              <p class="text-[7px] text-gray-400 mt-0.5">NIP. 197508122003121002</p>
+            </div>
+          </div>
+
+          <!-- Letter Footer Info -->
+          <div class="border-t border-dashed mt-5 pt-2 text-center text-[7px] text-gray-400 leading-normal">
+            * Dokumen ini sah dikeluarkan secara sistematis oleh Portal PMB MAN 2 Kota Bengkulu.<br>
+            Format dokumen telah dikalibrasi pas pada ukuran kertas standar A4 portrait (210mm x 297mm).
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-3 no-print">
+          <!-- Button 1: Download A4 PDF -->
+          <button 
+            onclick="downloadA4PDF()"
+            class="bg-brand-green hover:bg-emerald-900 text-white font-bold py-2.5 px-3 rounded-lg text-xs tracking-wider transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-1.5 shadow"
+          >
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>UNDUH PDF (A4)</span>
+          </button>
+
+          <!-- Button 2: Browser Print Dialog -->
+          <button 
+            onclick="triggerPrint()"
+            class="bg-brand-gold hover:bg-amber-600 text-white font-bold py-2.5 px-3 rounded-lg text-xs tracking-wider transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-1.5 shadow"
+          >
+            <i class="fa-solid fa-print"></i>
+            <span>CETAK DOKUMEN</span>
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer Area (No-Print) -->
+    <footer class="bg-brand-green text-white text-center p-4 mt-8 border-t-2 border-brand-gold no-print">
+      <p class="text-[10px] font-semibold text-brand-gold">&copy; 2026 MAN 2 Kota Bengkulu</p>
+      <p class="text-[8px] text-gray-300 mt-0.5">Sistem Informasi Pengumuman Kelulusan PMB</p>
+      <div class="flex items-center justify-center gap-1 mt-2 text-[8px] text-gray-400">
+        <i class="fa-brands fa-google text-emerald-400"></i>
+        <span>Powered by Google Sheets</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // URL API Google Apps Script (Ganti dengan URL publik Web App Anda saat deploy)
+    const API_URL = "https://script.google.com/macros/s/AKfycbz8qYbfG5-28-ZxBgT9AUPSaPG_v5T1wUqfSlGeX6myqpkWf-nZ3gI2RvWyeRmqBQG2/exec";
+
+    async function handleSearch(event) {
+      event.preventDefault();
+
+      // Get element references
+      const inputNoPeserta = document.getElementById("nomor_peserta").value.trim();
+      const inputNisn = document.getElementById("nisn").value.trim();
+      
+      const submitBtn = document.getElementById("submit-btn");
+      const btnText = document.getElementById("btn-text");
+      const btnIcon = document.getElementById("btn-icon");
+      const btnSpinner = document.getElementById("btn-spinner");
+
+      const errorMsg = document.getElementById("error-message");
+      const resultSection = document.getElementById("result-section");
+
+      // Input Validation
+      if (!inputNoPeserta || !inputNisn) {
+        alertCustom("Silakan masukkan Nomor Peserta dan NISN Anda secara lengkap.");
+        return;
+      }
+
+      // Reset UI state
+      errorMsg.classList.add("hidden");
+      resultSection.classList.add("hidden");
+
+      // CEK JIKA MENGGUNAKAN URL PLACEHOLDER
+      // Jika ya, langsung jalankan demo fallback lokal secara instan untuk menghindari error 'Failed to fetch' di konsol
+      const isPlaceholder = API_URL.includes("WEB_APP_ID") || API_URL.includes("AKfycbyE793Q038gQyD-p16QW7iX6y71vA0R9bX12345");
+      
+      if (isPlaceholder) {
+        // Berikan sedikit jeda animasi memproses (loading) agar pengalaman pengguna tetap natural
+        submitBtn.disabled = true;
+        btnText.textContent = "MEMPROSES...";
+        btnIcon.classList.add("hidden");
+        btnSpinner.classList.remove("hidden");
+        
+        setTimeout(() => {
+          showDemoFallback(inputNoPeserta, inputNisn);
+          submitBtn.disabled = false;
+          btnText.textContent = "CEK HASIL";
+          btnIcon.classList.remove("hidden");
+          btnSpinner.classList.add("hidden");
+        }, 850);
+        return;
+      }
+
+      // Jika URL API sudah asli, jalankan fetch ke server Google Apps Script
+      submitBtn.disabled = true;
+      btnText.textContent = "MEMPROSES...";
+      btnIcon.classList.add("hidden");
+      btnSpinner.classList.remove("hidden");
+
+      try {
+        const response = await fetch(`${API_URL}?nomor_peserta=${encodeURIComponent(inputNoPeserta)}&nisn=${encodeURIComponent(inputNisn)}`);
+        
+        if (!response.ok) {
+          throw new Error("Respon server gagal");
+        }
+
+        const data = await response.json();
+
+        if (data.status === "error" || !data.nomor_peserta) {
+          errorMsg.classList.remove("hidden");
+          scrollToElement(errorMsg);
+        } else {
+          renderGraduationData(data);
+          resultSection.classList.remove("hidden");
+          scrollToElement(resultSection);
+        }
+
+      } catch (error) {
+        console.error("Kesalahan API:", error);
+        // Fallback cadangan jika koneksi gagal tetapi data dicari cocok dengan data dummy
+        showDemoFallback(inputNoPeserta, inputNisn);
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = "CEK HASIL";
+        btnIcon.classList.remove("hidden");
+        btnSpinner.classList.add("hidden");
+      }
+    }
+
+    function renderGraduationData(data) {
+      document.getElementById("res-no-peserta").textContent = data.nomor_peserta;
+      document.getElementById("res-nisn").textContent = data.nisn;
+      document.getElementById("res-nama").textContent = data.nama;
+      document.getElementById("res-tgl-lahir").textContent = data.tanggal_lahir;
+      document.getElementById("res-sekolah").textContent = data.asal_sekolah;
+
+      const statusBanner = document.getElementById("status-banner");
+      const statusIconWrapper = document.getElementById("status-icon-wrapper");
+      const statusTitle = document.getElementById("status-title");
+      const statusDesc = document.getElementById("status-desc");
+
+      const statusClean = data.status ? data.status.trim() : "";
+      const statusUpper = statusClean.toUpperCase();
+
+      if (statusUpper === "LULUS PILIHAN 1" || statusUpper === "LULUS") {
+        // Green Notification theme
+        statusBanner.className = "mb-5 p-3 rounded-lg flex items-start gap-2.5 bg-green-100 border border-green-200 text-green-900";
+        statusIconWrapper.className = "w-7 h-7 rounded-full bg-green-200 text-green-800 flex items-center justify-center text-sm shrink-0";
+        statusIconWrapper.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+        statusTitle.textContent = "LULUS SELEKSI - PILIHAN 1";
+        statusDesc.textContent = "🎉 Selamat! Anda dinyatakan LULUS Seleksi Calon Murid Baru MAN 2 Kota Bengkulu.";
+      } else if (statusUpper.startsWith("LULUS PILIHAN 2")) {
+        // Pink/Rose Notification theme
+        statusBanner.className = "mb-5 p-3 rounded-lg flex items-start gap-2.5 bg-rose-50 border border-rose-200 text-rose-950 shadow-sm";
+        statusIconWrapper.className = "w-7 h-7 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-sm shrink-0";
+        statusIconWrapper.innerHTML = `<i class="fa-solid fa-school text-xs"></i>`;
+        statusTitle.textContent = "LULUS SELEKSI - PILIHAN KEDUA";
+        
+        // Ekstrak nama sekolah rekomendasi secara cerdas & jadikan format huruf kapital rapi
+        let sekolahPilihanDua = "Sekolah Rekomendasi Aliansi";
+        const diMatch = statusClean.match(/di\s+(.+)/i);
+        if (diMatch && diMatch[1]) {
+          sekolahPilihanDua = diMatch[1].trim();
+        } else {
+          const parenthesized = statusClean.match(/\(([^)]+)\)/);
+          if (parenthesized && parenthesized[1]) {
+            sekolahPilihanDua = parenthesized[1].trim();
+          } else {
+            const hyphenated = statusClean.match(/-\s*(.+)/);
+            if (hyphenated && hyphenated[1]) {
+              sekolahPilihanDua = hyphenated[1].trim();
+            }
+          }
+        }
+        
+        // Format ke Title Case (Kapital di setiap awal kata)
+        sekolahPilihanDua = sekolahPilihanDua.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+        statusDesc.textContent = `🎉 Anda dinyatakan LULUS PILIHAN KEDUA di ${sekolahPilihanDua}.`;
+      } else {
+        // Fallback for not accepted or pending status
+        statusBanner.className = "mb-5 p-3 rounded-lg flex items-start gap-2.5 bg-gray-100 border border-gray-200 text-gray-800";
+        statusIconWrapper.className = "w-7 h-7 rounded-full bg-gray-200 text-gray-800 flex items-center justify-center text-sm shrink-0";
+        statusIconWrapper.innerHTML = `<i class="fa-solid fa-circle-info"></i>`;
+        statusTitle.textContent = "HASIL SELEKSI";
+        statusDesc.textContent = "Mohon maaf, nama Anda belum tercantum dalam daftar kelulusan periode ini. Tetap semangat!";
+      }
+    }
+
+    // Directly generate and download calibrated A4 PDF (with visual isolation fix)
+    function downloadA4PDF() {
+      const element = document.getElementById("print-area");
+      const studentName = document.getElementById("res-nama").textContent || "Peserta";
+      const cleanFileName = `Bukti_Kelulusan_${studentName.replace(/\s+/g, "_")}.pdf`;
+
+      // Simpan inline style asli agar bisa dikembalikan setelah proses rendering selesai
+      const originalStyle = element.getAttribute("style") || "";
+      
+      // JEMBATAN DIMENSI (Sizing Bridge): Paksa elemen bukti kelulusan ke ukuran cetak A4 sesungguhnya
+      // Cara ini mencegah html2canvas memotong elemen akibat limitasi ukuran viewport ponsel
+      element.style.width = "794px"; // Lebar optimal standar A4 portrait pada 96 DPI
+      element.style.minHeight = "1050px"; 
+      element.style.padding = "50px";
+      element.style.boxShadow = "none";
+      element.style.borderRadius = "0px";
+      element.style.border = "none";
+
+      // Set target options untuk html2pdf agar menghasilkan file PDF super tajam & pas A4
+      const opt = {
+        margin:       10, // batas pinggir kertas (dalam milimeter)
+        filename:     cleanFileName,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+          scale: 2,           // Mempertajam kualitas tulisan & gambar logo
+          useCORS: true,      // Mengizinkan pemuatan gambar CDN luar secara aman
+          logging: false,
+          width: 794,         // Paksa lebar render canvas
+          windowWidth: 794
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      // Jalankan compiler PDF, lalu kembalikan tampilan responsif setelah unduhan selesai
+      html2pdf().set(opt).from(element).save().then(() => {
+        // Kembalikan ke tampilan semula pada layar responsif ponsel secara mulus
+        element.setAttribute("style", originalStyle);
+        element.style.width = "";
+        element.style.minHeight = "";
+        element.style.padding = "";
+        element.style.boxShadow = "";
+        element.style.borderRadius = "";
+        element.style.border = "";
+      });
+    }
+
+    // Call browser's standard print system (Optimized via @media print to A4 size)
+    function triggerPrint() {
+      window.print();
+    }
+
+    // Utility: Smooth Scroll function
+    function scrollToElement(element) {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 100);
+    }
+
+    // Utility: Custom Popup modal
+    function alertCustom(message) {
+      const modal = document.createElement("div");
+      modal.className = "fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 fade-in";
+      modal.innerHTML = `
+        <div class="bg-white rounded-xl p-5 max-w-sm w-full shadow-xl">
+          <div class="flex items-center gap-2 text-brand-green mb-3">
+            <i class="fa-solid fa-circle-info text-xl"></i>
+            <h5 class="font-bold text-sm">Informasi Portal</h5>
+          </div>
+          <p class="text-xs text-gray-600 leading-relaxed">${message}</p>
+          <button onclick="this.closest('.fixed').remove()" class="mt-4 w-full bg-brand-green hover:bg-emerald-900 text-white py-2 rounded-lg text-xs font-semibold">Mengerti</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    function showDemoFallback(noPeserta, nisn) {
+      console.log("Menjalankan database simulasi lokal.");
+      
+      const mockDB = [
+        {
+          "nomor_peserta": "11111",
+          "nisn": "2345567",
+          "nama": "akoe",
+          "tanggal_lahir": "12/12/2012",
+          "asal_sekolah": "MTSN ANNU",
+          "status": "LULUS PILIHAN 1"
+        },
+        {
+          "nomor_peserta": "2222",
+          "nisn": "7654321",
+          "nama": "denai",
+          "tanggal_lahir": "01/01/2001",
+          "asal_sekolah": "SMP INI",
+          "status": "LULUS PILIHAN 2 di MA Jallauddin"
+        }
+      ];
+
+      const match = mockDB.find(
+        item => item.nomor_peserta.trim().toLowerCase() === noPeserta.toLowerCase() && 
+                item.nisn.trim() === nisn
+      );
+      
+      const errorMsg = document.getElementById("error-message");
+      const resultSection = document.getElementById("result-section");
+
+      if (match) {
+        renderGraduationData(match);
+        resultSection.classList.remove("hidden");
+        scrollToElement(resultSection);
+      } else {
+        errorMsg.classList.remove("hidden");
+        scrollToElement(errorMsg);
+      }
+    }
+  </script>
+</body>
+</html>
